@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: BuchungssystemDB
+    environment:
+      POSTGRES_DB: Buchungssystem
+      POSTGRES_USER: myuser
+      POSTGRES_PASSWORD: mypassword
+    ports:
+      - "5435:5435"
+    volumes:
+      - buchungssystem-db-data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: Buchungssystem-springboot
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/Buchungssystem
+      SPRING_DATASOURCE_USERNAME: myuser
+      SPRING_DATASOURCE_PASSWORD: mypassword
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SERVER_PORT: 8083
+    ports:
+      - "8083:8083"
+
+volumes:
+  buchungssystem-db-data:

@@ -1,0 +1,36 @@
+server:
+  port: 8089   # Gateway listens here (different from microservices)
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      default-filters:
+        - AddResponseHeader=X-Gateway, SpringCloudGateway
+
+      routes:
+        # 🚗 Ilija – Fahrzeugverwaltung
+        - id: fahrzeug-service
+          uri: http://fahrzeug-service:8080
+          predicates:
+            - Path=/api/fahrzeuge/**
+
+        # 📊 Noah – Reporting / Statistik
+        - id: reporting-service
+          uri: http://reporting-service:8081
+          predicates:
+            - Path=/api/reporting/**
+
+        # 👤 Vale – Benutzerverwaltung
+        - id: benutzer-service
+          uri: http://benutzer-service:8082
+          predicates:
+            - Path=/api/benutzer/**
+
+        # 🚘 Henri – Buchungssystem
+        - id: buchung-service
+          uri: http://buchung-service:8083
+          predicates:
+            - Path=/api/buchung/**

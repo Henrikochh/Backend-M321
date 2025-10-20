@@ -11,4 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class SystemController {
     private final SystemRepository repository;
 
+    public SystemController(SystemRepository repository) {
+        this.repository = repository;
+    }
 }

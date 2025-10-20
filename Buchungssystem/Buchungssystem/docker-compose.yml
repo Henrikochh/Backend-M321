@@ -101,7 +101,9 @@ services:
       - buchung-db-data:/var/lib/postgresql/data
 
   buchung-service:
-    build: ./buchung-service
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: buchung-service
     depends_on:
       - buchung-db
@@ -109,9 +111,11 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://buchung-db:5432/buchungssystem
       SPRING_DATASOURCE_USERNAME: buchung
       SPRING_DATASOURCE_PASSWORD: buchung123
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SERVER_PORT: 8083
     ports:
       - "8083:8083"
+
 
   # =====================================================
   # 🔹 API Gateway

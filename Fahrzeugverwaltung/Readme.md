@@ -51,11 +51,11 @@ com.example.autovermietung.vehicles
 
 | Methode | Endpoint | Beschreibung |
 |----------|-----------|---------------|
-| `GET` | `/api/vehicles` | Gibt alle Fahrzeuge zurück |
-| `GET` | `/api/vehicles/{id}` | Gibt ein einzelnes Fahrzeug anhand der ID zurück |
-| `POST` | `/api/vehicles` | Legt ein neues Fahrzeug an |
-| `PUT` | `/api/vehicles/{id}` | Aktualisiert ein bestehendes Fahrzeug |
-| `DELETE` | `/api/vehicles/{id}` | Löscht ein Fahrzeug |
+| `GET` | `/api/fahrzeuge` | Gibt alle Fahrzeuge zurück |
+| `GET` | `/api/fahrzeuge/{id}` | Gibt ein einzelnes Fahrzeug anhand der ID zurück |
+| `POST` | `/api/fahrzeuge` | Legt ein neues Fahrzeug an |
+| `PUT` | `/api/fahrzeuge/{id}` | Aktualisiert ein bestehendes Fahrzeug |
+| `DELETE` | `/api/fahrzeuge/{id}` | Löscht ein Fahrzeug |
 
 ---
 

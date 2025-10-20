@@ -1,10 +1,141 @@
-version: '3.8'
+version: "3.8"
+
 services:
-  postgres:
-    image: postgres:13
+  # =====================================================
+  # 🔹 Ilija - Fahrzeugverwaltung
+  # =====================================================
+  fahrzeug-db:
+    image: postgres:15
+    container_name: fahrzeug-db
     environment:
-      POSTGRES_DB: userdb
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: password
+      POSTGRES_DB: fahrzeugdb
+      POSTGRES_USER: fahrzeug
+      POSTGRES_PASSWORD: fahrzeug123
+    ports:
+      - "5432:5432"
+    volumes:
+      - fahrzeug-db-data:/var/lib/postgresql/data
+
+  fahrzeug-service:
+    build: ./fahrzeug-service
+    container_name: fahrzeug-service
+    depends_on:
+      - fahrzeug-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://fahrzeug-db:5432/fahrzeugdb
+      SPRING_DATASOURCE_USERNAME: fahrzeug
+      SPRING_DATASOURCE_PASSWORD: fahrzeug123
+      SERVER_PORT: 8080
+    ports:
+      - "8080:8080"
+
+  # =====================================================
+  # 🔹 Noah - Reporting / Statistik
+  # =====================================================
+  reporting-db:
+    image: postgres:15
+    container_name: reporting-db
+    environment:
+      POSTGRES_DB: reportingdb
+      POSTGRES_USER: reporting
+      POSTGRES_PASSWORD: reporting123
+    ports:
+      - "5433:5432"
+    volumes:
+      - reporting-db-data:/var/lib/postgresql/data
+
+  reporting-service:
+    build: ./reporting-service
+    container_name: reporting-service
+    depends_on:
+      - reporting-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://reporting-db:5432/reportingdb
+      SPRING_DATASOURCE_USERNAME: reporting
+      SPRING_DATASOURCE_PASSWORD: reporting123
+      SERVER_PORT: 8081
+    ports:
+      - "8081:8081"
+
+  # =====================================================
+  # 🔹 Vale - Benutzerverwaltung
+  # =====================================================
+  benutzer-db:
+    image: postgres:15
+    container_name: benutzer-db
+    environment:
+      POSTGRES_DB: benutzerdb
+      POSTGRES_USER: benutzer
+      POSTGRES_PASSWORD: benutzer123
     ports:
       - "5434:5432"
+    volumes:
+      - benutzer-db-data:/var/lib/postgresql/data
+
+  benutzer-service:
+    build: ./benutzer-service
+    container_name: benutzer-service
+    depends_on:
+      - benutzer-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://benutzer-db:5432/benutzerdb
+      SPRING_DATASOURCE_USERNAME: benutzer
+      SPRING_DATASOURCE_PASSWORD: benutzer123
+      SERVER_PORT: 8082
+    ports:
+      - "8082:8082"
+
+  # =====================================================
+  # 🔹 Henri - Buchungssystem
+  # =====================================================
+  buchung-db:
+    image: postgres:15
+    container_name: buchung-db
+    environment:
+      POSTGRES_DB: buchungssystem
+      POSTGRES_USER: buchung
+      POSTGRES_PASSWORD: buchung123
+    ports:
+      - "5435:5432"
+    volumes:
+      - buchung-db-data:/var/lib/postgresql/data
+
+  buchung-service:
+    build: ./buchung-service
+    container_name: buchung-service
+    depends_on:
+      - buchung-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://buchung-db:5432/buchungssystem
+      SPRING_DATASOURCE_USERNAME: buchung
+      SPRING_DATASOURCE_PASSWORD: buchung123
+      SERVER_PORT: 8083
+    ports:
+      - "8083:8083"
+
+  # =====================================================
+  # 🔹 API Gateway
+  # =====================================================
+  api-gateway:
+    build: ./api-gateway
+    container_name: api-gateway
+    depends_on:
+      - fahrzeug-service
+      - reporting-service
+      - benutzer-service
+      - buchung-service
+    ports:
+      - "8089:8089"   # Public gateway port
+    environment:
+      SERVER_PORT: 8089
+    # The gateway will route to internal service names below
+    # (see application.yml in gateway project)
+
+# =====================================================
+# VOLUMES
+# =====================================================
+volumes:
+  fahrzeug-db-data:
+  reporting-db-data:
+  benutzer-db-data:
+  buchung-db-data:

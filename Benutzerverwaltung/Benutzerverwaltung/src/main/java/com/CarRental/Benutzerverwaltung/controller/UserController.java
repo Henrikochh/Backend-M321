@@ -19,13 +19,29 @@ public class UserController {
         return userRepository.findAll();
     }
 
+    @GetMapping("/{id}")
+    public User getUserById(@PathVariable Long id) {
+        return userRepository.findById(id).orElse(null);
+    }
+
     @PostMapping
     public User createUser(@RequestBody User user) {
         return userRepository.save(user);
     }
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userRepository.findById(id).orElse(null);
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+    }
+
+    @PutMapping("/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found on :: " + id));
+        user.setName(userDetails.getName());
+        user.setEmail(userDetails.getEmail());
+        user.setAddress(userDetails.getAddress());
+        user.setPhoneNumber(userDetails.getPhoneNumber());
+        user.setPassportNumber(userDetails.getPassportNumber());
+        return userRepository.save(user);
     }
 }

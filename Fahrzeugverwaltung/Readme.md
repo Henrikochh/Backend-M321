@@ -1,28 +1,27 @@
-# 🚗 Fahrzeugverwaltung – Backend Modul
+# Fahrzeugverwaltung – Backend Modul
 
-Dieses Repository enthält das **Backend-Modul für die Fahrzeugverwaltung** innerhalb des Schulprojekts *Autovermietung*.  
+Dieses Repository enthält das **Backend-Modul für die Fahrzeugverwaltung** innerhalb des Schulprojekts *Autovermietung*.
 Es wurde mit **Spring Boot (Java)** entwickelt und ist für die Verwaltung sämtlicher Fahrzeugdaten im System zuständig.
 
 ---
 
-## 🧩 Überblick
+## Überblick
 
-Die Fahrzeugverwaltung ermöglicht das **Anlegen, Bearbeiten, Löschen und Abrufen von Fahrzeugen** sowie die Verwaltung ihres aktuellen **Status** (*verfügbar*, *vermietet*, *in Wartung*).  
+Die Fahrzeugverwaltung ermöglicht das **Anlegen, Bearbeiten, Löschen und Abrufen von Fahrzeugen** sowie die Verwaltung ihres aktuellen **Status** (*verfügbar*, *vermietet*, *in Wartung*).
 Alle Funktionen werden über standardisierte **REST-Schnittstellen (CRUD-Operationen)** bereitgestellt und vom Frontend (React.js) konsumiert.
 
 ---
 
-## ⚙️ Tech Stack
+## Tech Stack
 
-- **Backend:** Spring Boot (Java 17+)  
-- **Database:** PostgreSQL oder MySQL  
-- **Testing:** JUnit 5  
-- **Build Tool:** Maven  
-- **Containerization:** Docker  
+- **Backend:** Spring Boot (Java 17+)
+- **Database:** PostgreSQL oder MySQL
+- **Build Tool:** Maven
+- **Containerization:** Docker
 
 ---
 
-## 📁 Hauptfunktionen
+## Hauptfunktionen
 
 | Funktion | Beschreibung |
 |-----------|---------------|
@@ -34,20 +33,19 @@ Alle Funktionen werden über standardisierte **REST-Schnittstellen (CRUD-Operati
 
 ---
 
-## 🧱 Architektur
+## Architektur
 
 Das Modul ist nach dem klassischen **Spring-Boot-Layered-Architecture-Pattern** aufgebaut:
 
 com.example.autovermietung.vehicles
-┣  controller → REST-Controller für HTTP-Anfragen
-┣  service → Geschäftslogik und Validierungen
-┣  repository → Datenbankzugriff (Spring Data JPA)
+┣ controller → REST-Controller für HTTP-Anfragen
+┣ service → Geschäftslogik und Validierungen
+┣ repository → Datenbankzugriff (Spring Data JPA)
 ┗ model/entity → Fahrzeug-Entität und Datenmodell
-
 
 ---
 
-## 🔌 API-Endpoints (Beispiele)
+## API-Endpoints (Beispiele)
 
 | Methode | Endpoint | Beschreibung |
 |----------|-----------|---------------|
@@ -56,25 +54,3 @@ com.example.autovermietung.vehicles
 | `POST` | `/api/fahrzeuge` | Legt ein neues Fahrzeug an |
 | `PUT` | `/api/fahrzeuge/{id}` | Aktualisiert ein bestehendes Fahrzeug |
 | `DELETE` | `/api/fahrzeuge/{id}` | Löscht ein Fahrzeug |
-
----
-
-## 🧪 Tests
-
-- Unit-Tests mit **JUnit 5**  
-- Postman tets
-- Ziel: Validierung der CRUD-Logik und Statusverwaltung  
-
----
-
-## 🚀 Deployment
-
-Das Backend wird über **Docker** containerisiert und in einer lokalen Entwicklungsumgebung betrieben.  
-Ein späteres Deployment auf **AWS** oder **Azure** ist geplant.
-
----
-
-## 📄 Lizenz
-
-Dieses Projekt wurde im Rahmen des Schulprojekts *Verteilte Systeme – Autovermietung* entwickelt.  
-

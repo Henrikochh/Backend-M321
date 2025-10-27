@@ -54,7 +54,7 @@ public class ExternalDataService {
     public List<VehicleDto> getAllVehicles() {
         try {
             ResponseEntity<List<VehicleDto>> response = restTemplate.exchange(
-                vehicleServiceUrl + "/fahrzeuge",
+                vehicleServiceUrl + "/api/fahrzeuge",
                 HttpMethod.GET,
                 null,
                 new ParameterizedTypeReference<List<VehicleDto>>() {}
@@ -92,7 +92,7 @@ public class ExternalDataService {
 
     public VehicleDto getVehicleById(Long vehicleId) {
         try {
-            return restTemplate.getForObject(vehicleServiceUrl + "/fahrzeuge/" + vehicleId, VehicleDto.class);
+            return restTemplate.getForObject(vehicleServiceUrl + "/api/fahrzeuge/" + vehicleId, VehicleDto.class);
         } catch (RestClientException e) {
             logger.error("Fehler beim Abrufen der Fahrzeugdaten für ID " + vehicleId + ": " + e.getMessage());
             return null;

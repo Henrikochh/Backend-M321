@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  reporting-service:
+    build: .
+    container_name: reporting-service
+    environment:
+      SERVICES_BENUTZERVERWALTUNG_URL: http://benutzerverwaltung-service:8081
+      SERVICES_FAHRZEUGVERWALTUNG_URL: http://fahrzeugverwaltung-service:8082
+      SERVICES_BUCHUNGSSYSTEM_URL: http://buchungssystem-service:8083
+    ports:
+      - "8084:8084"
+    networks:
+      - car-rental-network
+
+networks:
+  car-rental-network:
+    external: true

@@ -17,7 +17,7 @@ services:
       - fahrzeug-db-data:/var/lib/postgresql/data
 
   fahrzeug-service:
-    build: ./fahrzeug-service
+    build: ./Fahrzeugverwaltung
     container_name: fahrzeug-service
     depends_on:
       - fahrzeug-db
@@ -45,7 +45,7 @@ services:
       - reporting-db-data:/var/lib/postgresql/data
 
   reporting-service:
-    build: ./reporting-service
+    build: ./Reporting/Reporting
     container_name: reporting-service
     depends_on:
       - reporting-db
@@ -73,7 +73,7 @@ services:
       - benutzer-db-data:/var/lib/postgresql/data
 
   benutzer-service:
-    build: ./benutzer-service
+    build: ./Benutzerverwaltung/Benutzerverwaltung
     container_name: benutzer-service
     depends_on:
       - benutzer-db
@@ -101,7 +101,7 @@ services:
       - buchung-db-data:/var/lib/postgresql/data
 
   buchung-service:
-    build: ./buchung-service
+    build: ./Buchungssystem/Buchungssystem
     container_name: buchung-service
     depends_on:
       - buchung-db
@@ -117,7 +117,7 @@ services:
   # 🔹 API Gateway
   # =====================================================
   api-gateway:
-    build: ./api-gateway
+    build: ./Gateway/Gateway
     container_name: api-gateway
     depends_on:
       - fahrzeug-service

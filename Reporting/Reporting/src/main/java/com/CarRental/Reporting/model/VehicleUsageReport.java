@@ -18,5 +18,5 @@ public class VehicleUsageReport {
     private Integer totalRentalDays;
     private Double utilizationRate;
     private LocalDate reportDate;
-    private String currentStatus;
+    private boolean available;
 }

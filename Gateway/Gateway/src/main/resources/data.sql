@@ -1,1 +1,0 @@
--- No specific application data for Gateway service.

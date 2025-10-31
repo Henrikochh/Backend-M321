@@ -1,6 +1,5 @@
 package com.example.autovermietung.vehicles.model.entity;
 
-import com.example.autovermietung.vehicles.model.FahrzeugStatus;
 import jakarta.persistence.*;
 
 @Entity
@@ -16,8 +15,7 @@ public class Fahrzeug {
     private String kennzeichen;
     private double preisProTag;
 
-    @Enumerated(EnumType.STRING)
-    private FahrzeugStatus status;
+    private boolean available;
 
     // Getters and Setters
 
@@ -69,11 +67,11 @@ public class Fahrzeug {
         this.preisProTag = preisProTag;
     }
 
-    public FahrzeugStatus getStatus() {
-        return status;
+    public boolean isAvailable() {
+        return available;
     }
 
-    public void setStatus(FahrzeugStatus status) {
-        this.status = status;
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

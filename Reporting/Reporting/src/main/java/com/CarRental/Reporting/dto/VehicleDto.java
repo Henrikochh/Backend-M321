@@ -14,5 +14,5 @@ public class VehicleDto {
     private Integer baujahr;
     private String kennzeichen;
     private Double preisProTag;
-    private String status; // VERFÜGBAR, VERMIETET, WARTUNG
+    private boolean available;
 }

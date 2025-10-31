@@ -114,7 +114,7 @@ public class ReportingService {
         report.setTotalRentalDays(totalRentalDays);
         report.setUtilizationRate(Math.min(utilizationRate, 100.0)); // Cap at 100%
         report.setReportDate(reportDate);
-        report.setCurrentStatus(vehicle.getStatus());
+        report.setAvailable(vehicle.isAvailable());
 
         return report;
     }
@@ -223,11 +223,11 @@ public class ReportingService {
 
         // Vehicle statistics
         long availableVehicles = allVehicles.stream()
-            .filter(vehicle -> STATUS_VERFUGBAR.equals(vehicle.getStatus()))
+            .filter(VehicleDto::isAvailable)
             .count();
 
         long rentedVehicles = allVehicles.stream()
-            .filter(vehicle -> STATUS_VERMIETET.equals(vehicle.getStatus()))
+            .filter(vehicle -> !vehicle.isAvailable())
             .count();
 
         stats.put("totalRevenue", totalRevenue);

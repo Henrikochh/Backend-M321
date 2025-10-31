@@ -34,7 +34,7 @@ public class FahrzeugService {
         fahrzeug.setBaujahr(fahrzeugDetails.getBaujahr());
         fahrzeug.setKennzeichen(fahrzeugDetails.getKennzeichen());
         fahrzeug.setPreisProTag(fahrzeugDetails.getPreisProTag());
-        fahrzeug.setStatus(fahrzeugDetails.getStatus());
+        fahrzeug.setAvailable(fahrzeugDetails.isAvailable());
 
         return fahrzeugRepository.save(fahrzeug);
     }

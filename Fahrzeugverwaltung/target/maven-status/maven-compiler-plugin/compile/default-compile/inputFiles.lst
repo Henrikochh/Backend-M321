@@ -1,0 +1,5 @@
+/app/Fahrzeugverwaltung/src/main/java/com/example/autovermietung/vehicles/service/FahrzeugService.java
+/app/Fahrzeugverwaltung/src/main/java/com/example/autovermietung/AutovermietungApplication.java
+/app/Fahrzeugverwaltung/src/main/java/com/example/autovermietung/vehicles/repository/FahrzeugRepository.java
+/app/Fahrzeugverwaltung/src/main/java/com/example/autovermietung/vehicles/model/entity/Fahrzeug.java
+/app/Fahrzeugverwaltung/src/main/java/com/example/autovermietung/vehicles/controller/FahrzeugController.java

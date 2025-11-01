@@ -5,40 +5,24 @@ cloud:
 
       routes:
         # 🚗 Ilija – Fahrzeugverwaltung
-        - id: fahrzeug-service-root
-          uri: http://fahrzeug-service:8080
-          predicates:
-            - Path=/api/fahrzeuge
-            
         - id: fahrzeug-service-paths
           uri: http://fahrzeug-service:8080
           predicates:
             - Path=/api/fahrzeuge/**
 
         # 📊 Noah – Reporting / Statistik
-        # (Hier gehe ich davon aus, dass Sie meine vorherige Korrektur [Lösung 2A] angewendet haben)
-        - id: reporting-service
+        - id: reporting-service-paths
           uri: http://reporting-service:8081
           predicates:
-            - Path=/reporting/**
+            - Path=/api/reporting/**
 
         # 👤 Vale – Benutzerverwaltung
-        - id: benutzer-service-root
-          uri: http://benutzer-service:8082
-          predicates:
-            - Path=/api/benutzer
-            
         - id: benutzer-service-paths
           uri: http://benutzer-service:8082
           predicates:
             - Path=/api/benutzer/**
 
         # 🚘 Henri – Buchungssystem
-        - id: buchung-service-root
-          uri: http://buchung-service:8083
-          predicates:
-            - Path=/api/buchung
-            
         - id: buchung-service-paths
           uri: http://buchung-service:8083
           predicates:

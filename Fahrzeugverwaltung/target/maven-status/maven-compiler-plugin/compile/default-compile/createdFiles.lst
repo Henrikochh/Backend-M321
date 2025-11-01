@@ -1,0 +1,5 @@
+com/example/autovermietung/vehicles/service/FahrzeugService.class
+com/example/autovermietung/vehicles/model/entity/Fahrzeug.class
+com/example/autovermietung/vehicles/controller/FahrzeugController.class
+com/example/autovermietung/vehicles/repository/FahrzeugRepository.class
+com/example/autovermietung/AutovermietungApplication.class

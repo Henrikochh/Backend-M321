@@ -7,5 +7,6 @@ public class VehicleDTO {
     private Long id;
     private String marke;
     private String modell;
+    private boolean available;
 }
 

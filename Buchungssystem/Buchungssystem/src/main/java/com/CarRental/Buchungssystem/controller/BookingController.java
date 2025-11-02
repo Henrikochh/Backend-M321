@@ -1,5 +1,6 @@
 package com.CarRental.Buchungssystem.controller;
 
+import com.CarRental.Buchungssystem.dto.BookingRequestDTO;
 import com.CarRental.Buchungssystem.dto.BookingResponseDTO;
 import com.CarRental.Buchungssystem.model.Booking;
 import com.CarRental.Buchungssystem.repository.BookingRepository;
@@ -7,6 +8,11 @@ import com.CarRental.Buchungssystem.service.BookingOrchestrationService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import com.CarRental.Buchungssystem.exception.VehicleNotAvailableException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @RestController
 @RequestMapping("/api/buchung")
@@ -30,12 +36,17 @@ public class BookingController {
     }
 
     @PostMapping
-    public Booking createBooking(@RequestBody Booking booking) {
-        return repository.save(booking);
+    public Booking createBooking(@RequestBody BookingRequestDTO bookingRequestDTO) {
+        return orchestrationService.createBooking(bookingRequestDTO);
     }
 
     @DeleteMapping("/{id}")
     public void deleteBooking(@PathVariable Long id) {
-        repository.deleteById(id);
+        orchestrationService.deleteBooking(id);
+    }
+
+    @ExceptionHandler(VehicleNotAvailableException.class)
+    public ResponseEntity<String> handleVehicleNotAvailableException(VehicleNotAvailableException e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.CONFLICT);
     }
 }

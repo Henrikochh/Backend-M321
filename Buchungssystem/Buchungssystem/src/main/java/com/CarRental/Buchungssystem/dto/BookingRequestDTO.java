@@ -1,35 +1,14 @@
-package com.CarRental.Buchungssystem.model;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.CarRental.Buchungssystem.dto;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Table;
-import jakarta.persistence.SequenceGenerator;
-
-@Entity
-@Table(name = "booking")
-@NoArgsConstructor
-@AllArgsConstructor
-public class Booking {
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "booking_seq")
-    @SequenceGenerator(name = "booking_seq", sequenceName = "booking_seq", initialValue = 5, allocationSize = 1)
-    private Long id;
+public class BookingRequestDTO {
     private Long vehicleId;
     private Long userId;
     private LocalDate startDate;
     private LocalDate endDate;
 
-    public Long getId() {
-        return id;
-    }
+    // Getters and setters
 
     public Long getVehicleId() {
         return vehicleId;

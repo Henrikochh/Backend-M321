@@ -1,56 +1,29 @@
-# Fahrzeugverwaltung – Backend Modul
+# Fahrzeugverwaltung
 
-Dieses Repository enthält das **Backend-Modul für die Fahrzeugverwaltung** innerhalb des Schulprojekts *Autovermietung*.
-Es wurde mit **Spring Boot (Java)** entwickelt und ist für die Verwaltung sämtlicher Fahrzeugdaten im System zuständig.
+Der Microservice "Fahrzeugverwaltung" ist die zentrale Komponente für die Verwaltung des Fahrzeugbestands in der Car-Rental-Anwendung. Er ist verantwortlich für das Hinzufügen, Aktualisieren, Löschen und Abrufen von Fahrzeugdaten.
 
----
+## Funktionalitäten
 
-## Überblick
+- **Fahrzeugmanagement:** Hinzufügen, Bearbeiten und Entfernen von Fahrzeugen aus dem System.
+- **Fahrzeugabfrage:** Abrufen einer Liste aller Fahrzeuge oder der Details eines einzelnen Fahrzeugs.
+- **Status-Tracking:** Verfolgung des aktuellen Status eines Fahrzeugs (z.B. verfügbar, vermietet, in Wartung).
 
-Die Fahrzeugverwaltung ermöglicht das **Anlegen, Bearbeiten, Löschen und Abrufen von Fahrzeugen** sowie die Verwaltung ihres aktuellen **Status** (*verfügbar*, *vermietet*, *in Wartung*).
-Alle Funktionen werden über standardisierte **REST-Schnittstellen (CRUD-Operationen)** bereitgestellt und vom Frontend (React.js) konsumiert.
+## Technologien
 
----
+- **Sprache:** Java
+- **Framework:** Spring Boot
+- **Build-Tool:** Maven
+- **Datenbank:** PostgreSQL
+- **Containerisierung:** Docker
 
-## Tech Stack
+## API-Endpunkte
 
-- **Backend:** Spring Boot (Java 17+)
-- **Database:** PostgreSQL oder MySQL
-- **Build Tool:** Maven
-- **Containerization:** Docker
+Die Funktionalitäten werden über eine RESTful-API mit dem Basis-Pfad `/api/fahrzeuge` bereitgestellt.
 
----
-
-## Hauptfunktionen
-
-| Funktion | Beschreibung |
-|-----------|---------------|
-| **Fahrzeuge anlegen** | POST-Endpoint zum Erstellen neuer Fahrzeuge mit Attributen wie Marke, Modell, Baujahr, Kennzeichen, Preis pro Tag etc. |
-| **Fahrzeuge abrufen** | GET-Endpoints zur Abfrage aller oder einzelner Fahrzeuge. |
-| **Fahrzeuge aktualisieren** | PUT/PATCH-Endpoints zum Ändern von Fahrzeuginformationen oder Status. |
-| **Fahrzeuge löschen** | DELETE-Endpoint zum Entfernen nicht mehr verfügbarer Fahrzeuge. |
-| **Statusverwaltung** | Verwaltung des Fahrzeugstatus (*verfügbar*, *vermietet*, *in Wartung*). |
-
----
-
-## Architektur
-
-Das Modul ist nach dem klassischen **Spring-Boot-Layered-Architecture-Pattern** aufgebaut:
-
-com.example.autovermietung.vehicles
-┣ controller → REST-Controller für HTTP-Anfragen
-┣ service → Geschäftslogik und Validierungen
-┣ repository → Datenbankzugriff (Spring Data JPA)
-┗ model/entity → Fahrzeug-Entität und Datenmodell
-
----
-
-## API-Endpoints (Beispiele)
-
-| Methode | Endpoint | Beschreibung |
-|----------|-----------|---------------|
-| `GET` | `/api/fahrzeuge` | Gibt alle Fahrzeuge zurück |
-| `GET` | `/api/fahrzeuge/{id}` | Gibt ein einzelnes Fahrzeug anhand der ID zurück |
-| `POST` | `/api/fahrzeuge` | Legt ein neues Fahrzeug an |
-| `PUT` | `/api/fahrzeuge/{id}` | Aktualisiert ein bestehendes Fahrzeug |
-| `DELETE` | `/api/fahrzeuge/{id}` | Löscht ein Fahrzeug |
+| Methode | Endpoint              | Beschreibung                                                                                                                            |
+|---------|-----------------------|-----------------------------------------------------------------------------------------------------------------------------------------|
+| `GET`   | `/`                   | Gibt eine Liste aller im System vorhandenen Fahrzeuge zurück.                                                                           |
+| `GET`   | `/{id}`               | Gibt die vollständigen Details eines einzelnen Fahrzeugs anhand seiner eindeutigen ID zurück.                                             |
+| `POST`  | `/`                   | Erstellt ein neues Fahrzeug. Die Fahrzeugdaten (z.B. Marke, Modell, Kennzeichen) werden im Request-Body als JSON-Objekt erwartet.         |
+| `PUT`   | `/{id}`               | Aktualisiert die Informationen eines bestehenden Fahrzeugs. Die neuen Daten werden im Request-Body als JSON-Objekt übergeben.             |
+| `DELETE`| `/{id}`               | Löscht ein Fahrzeug anhand seiner ID endgültig aus der Datenbank.                                                                        |

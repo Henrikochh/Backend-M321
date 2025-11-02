@@ -114,6 +114,37 @@ services:
       - "8083:8083"
 
   # =====================================================
+  # 🔹 Authentication Service
+  # =====================================================
+  auth-service:
+    build: ./Buchungssystem/Buchungssystem/Authentication
+    container_name: auth-service
+    depends_on:
+      - auth-db
+    ports:
+      - "8084:8084"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-db:5432/authdb
+      SPRING_DATASOURCE_USERNAME: auth
+      SPRING_DATASOURCE_PASSWORD: auth123
+      SERVER_PORT: 8084
+
+  # =====================================================
+  # 🔹 Authentication Database
+  # =====================================================
+  auth-db:
+    image: postgres:15
+    container_name: auth-db
+    environment:
+      POSTGRES_DB: authdb
+      POSTGRES_USER: auth
+      POSTGRES_PASSWORD: auth123
+    ports:
+      - "5436:5432"
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+
+  # =====================================================
   # 🔹 API Gateway
   # =====================================================
   api-gateway:
@@ -124,6 +155,7 @@ services:
       - reporting-service
       - benutzer-service
       - buchung-service
+      - auth-service
     ports:
       - "8089:8089"   # Public gateway port
     environment:
@@ -139,3 +171,4 @@ volumes:
   reporting-db-data:
   benutzer-db-data:
   buchung-db-data:
+  auth-db-data:

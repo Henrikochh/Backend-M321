@@ -11,8 +11,8 @@ services:
       POSTGRES_DB: fahrzeugdb
       POSTGRES_USER: fahrzeug
       POSTGRES_PASSWORD: fahrzeug123
-    ports:
-      - "5432:5432"
+    networks:
+      - private-net
     volumes:
       - fahrzeug-db-data:/var/lib/postgresql/data
 
@@ -26,8 +26,8 @@ services:
       SPRING_DATASOURCE_USERNAME: fahrzeug
       SPRING_DATASOURCE_PASSWORD: fahrzeug123
       SERVER_PORT: 8080
-    ports:
-      - "8080:8080"
+    networks:
+      - private-net
 
   # =====================================================
   # 🔹 Noah - Reporting / Statistik
@@ -39,8 +39,8 @@ services:
       POSTGRES_DB: reportingdb
       POSTGRES_USER: reporting
       POSTGRES_PASSWORD: reporting123
-    ports:
-      - "5433:5432"
+    networks:
+      - private-net
     volumes:
       - reporting-db-data:/var/lib/postgresql/data
 
@@ -54,8 +54,8 @@ services:
       SPRING_DATASOURCE_USERNAME: reporting
       SPRING_DATASOURCE_PASSWORD: reporting123
       SERVER_PORT: 8081
-    ports:
-      - "8081:8081"
+    networks:
+      - private-net
 
   # =====================================================
   # 🔹 Vale - Benutzerverwaltung
@@ -67,8 +67,8 @@ services:
       POSTGRES_DB: benutzerdb
       POSTGRES_USER: benutzer
       POSTGRES_PASSWORD: benutzer123
-    ports:
-      - "5434:5432"
+    networks:
+      - private-net
     volumes:
       - benutzer-db-data:/var/lib/postgresql/data
 
@@ -82,8 +82,8 @@ services:
       SPRING_DATASOURCE_USERNAME: benutzer
       SPRING_DATASOURCE_PASSWORD: benutzer123
       SERVER_PORT: 8082
-    ports:
-      - "8082:8082"
+    networks:
+      - private-net
 
   # =====================================================
   # 🔹 Henri - Buchungssystem
@@ -95,8 +95,8 @@ services:
       POSTGRES_DB: buchungssystem
       POSTGRES_USER: buchung
       POSTGRES_PASSWORD: buchung123
-    ports:
-      - "5435:5432"
+    networks:
+      - private-net
     volumes:
       - buchung-db-data:/var/lib/postgresql/data
 
@@ -113,9 +113,39 @@ services:
       SPRING_DATASOURCE_PASSWORD: buchung123
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SERVER_PORT: 8083
-    ports:
-      - "8083:8083"
+    networks:
+      - private-net
 
+
+  # =====================================================
+  # 🔹 Authentication Service
+  # =====================================================
+  auth-db:
+    image: postgres:15
+    container_name: auth-db
+    environment:
+      POSTGRES_DB: authentication
+      POSTGRES_USER: auth
+      POSTGRES_PASSWORD: auth123
+    networks:
+      - private-net
+    volumes:
+      - auth-db-data:/var/lib/postgresql/data
+
+  auth-service:
+    build:
+      context: ./Authentication
+      dockerfile: Dockerfile
+    container_name: auth-service
+    depends_on:
+      - auth-db
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-db:5432/authentication
+      SPRING_DATASOURCE_USERNAME: auth
+      SPRING_DATASOURCE_PASSWORD: auth123
+      SERVER_PORT: 8084
+    networks:
+      - private-net
 
   # =====================================================
   # 🔹 API Gateway
@@ -128,12 +158,23 @@ services:
       - reporting-service
       - benutzer-service
       - buchung-service
+      - auth-service
     ports:
       - "8089:8089"   # Public gateway port
     environment:
       SERVER_PORT: 8089
-    # The gateway will route to internal service names below
-    # (see application.yml in gateway project)
+    networks:
+      - public-net
+      - private-net
+
+# =====================================================
+# NETWORKS
+# =====================================================
+networks:
+  public-net:
+    driver: bridge
+  private-net:
+    driver: bridge
 
 # =====================================================
 # VOLUMES
@@ -143,3 +184,4 @@ volumes:
   reporting-db-data:
   benutzer-db-data:
   buchung-db-data:
+  auth-db-data:

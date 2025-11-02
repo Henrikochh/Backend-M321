@@ -3,28 +3,46 @@ spring:
     gateway:
       default-filters:
         - AddResponseHeader=X-Gateway, SpringCloudGateway
+      server:
+        webflux:
+          routes:
+            # 🔑 Authentication Service
+            - id: auth-service
+              uri: http://172.22.0.8:8084 # Use logical service name for Docker network
+              predicates:
+                - Path=/auth/**
+              filters:
+                # No JWT validation for auth endpoints (login/register)
+                - StripPrefix=1 # Removes /auth before forwarding
 
-      routes:
-        # 🚗 Ilija – Fahrzeugverwaltung
-        - id: fahrzeug-service
-          uri: http://fahrzeug-service:8080
-          predicates:
-            - Path=/api/fahrzeuge/**
+            # 🚗 Ilija – Fahrzeugverwaltung
+            - id: fahrzeug-service
+              uri: lb://fahrzeug-service # Use logical service name for Docker network
+              predicates:
+                - Path=/api/fahrzeuge/**
+              filters:
+                - name: JwtAuthenticationFilter
 
-        # 📊 Noah – Reporting / Statistik
-        - id: reporting-service
-          uri: http://reporting-service:8081
-          predicates:
-            - Path=/api/reporting/**
+            # 📊 Noah – Reporting / Statistik
+            - id: reporting-service
+              uri: lb://reporting-service # Use logical service name for Docker network
+              predicates:
+                - Path=/api/reporting/**
+              filters:
+                - name: JwtAuthenticationFilter
 
-        # 👤 Vale – Benutzerverwaltung
-        - id: benutzer-service
-          uri: http://benutzer-service:8082
-          predicates:
-            - Path=/api/benutzer/**
+            # 👤 Vale – Benutzerverwaltung
+            - id: benutzer-service
+              uri: lb://benutzer-service # Use logical service name for Docker network
+              predicates:
+                - Path=/api/benutzer/**
+              filters:
+                - name: JwtAuthenticationFilter
 
-        # 🚘 Henri – Buchungssystem
-        - id: buchung-service
-          uri: http://buchung-service:8083
-          predicates:
-            - Path=/api/buchung/**
+            # 🚘 Henri – Buchungssystem
+            - id: buchung-service
+              uri: lb://buchung-service # Use logical service name for Docker network
+              predicates:
+                - Path=/api/buchung/**
+              filters:
+                - name: JwtAuthenticationFilter
